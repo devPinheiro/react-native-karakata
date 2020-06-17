@@ -12,17 +12,17 @@ const slides = [
   {
     title: 'Welcome to Mnassa',
     description: 'Build and expand your network with people you trust',
-    img: "../assets/images/robot-dev.png"
+    img: "https://res.cloudinary.com/appnet/image/upload/v1592601647/karakata/piggy.png"
   },
   {
     title: 'Connect to your community',
     description: 'Find and attend activities within your interest',
-    img: "../../assets/images/robot-dev.png"
+    img: "https://res.cloudinary.com/appnet/image/upload/v1592601646/karakata/logistic.png"
   },
   {
     title: 'Earn Points',
     description: 'Gain points for supporting other members',
-    img: "../../assets/images/robot-dev.png"
+    img: "https://res.cloudinary.com/appnet/image/upload/v1592601646/karakata/shopping.png"
   }
 ];
 
@@ -39,9 +39,11 @@ const renderImages = scrollX => {
       onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }])}
     >
       {slides.map((item, index) => (
+        <>  
         <KaraView center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
+
           <Image
-            source={require("../../assets/images/robot-dev.png")}
+            source={{ uri: item.img}}
             resizeMode="contain"
             style={{
               width: SIZES.screenWidth,
@@ -50,8 +52,9 @@ const renderImages = scrollX => {
               top: -50
             }}
           />
-          {renderTexts(index)}
+          
         </KaraView>
+       </>
       ))}
     </ScrollView>
   );
@@ -157,6 +160,7 @@ const Onboarding = ({ navigation, screenProps }) => {
     </KaraView>
   );
 }
+
 Onboarding.navigationOptions = {
   header: null
 };
