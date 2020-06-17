@@ -1,30 +1,28 @@
 import {  Animated, Image, StyleSheet, ScrollView, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import Svg, {Path} from "react-native-svg";
+import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
 import { SIZES } from "../../utils/theme"
+import KaraText from "../components/KaraText"
+import KaraView from "../components/KaraView"
+import { LinearGradient as Gradient } from 'expo-linear-gradient';
+import { Transition } from 'react-navigation-fluid-transitions';
 
 
 const slides = [
   {
     title: 'Welcome to Mnassa',
     description: 'Build and expand your network with people you trust',
-    img: <Svg width={48} height={1} viewBox="0 0 48 1">
-      <Path d="M0 0h48v1H0z" fill="#063855" fillRule="evenodd" />
-    </Svg>
+    img: "../assets/images/robot-dev.png"
   },
   {
     title: 'Connect to your community',
     description: 'Find and attend activities within your interest',
-    img: <Svg width={48} height={1} viewBox="0 0 48 1">
-      <Path d="M0 0h48v1H0z" fill="#063855" fillRule="evenodd" />
-    </Svg>
+    img: "../../assets/images/robot-dev.png"
   },
   {
     title: 'Earn Points',
     description: 'Gain points for supporting other members',
-    img: <Svg width={48} height={1} viewBox="0 0 48 1">
-      <Path d="M0 0h48v1H0z" fill="#063855" fillRule="evenodd" />
-    </Svg>
+    img: "../../assets/images/robot-dev.png"
   }
 ];
 
@@ -41,17 +39,19 @@ const renderImages = scrollX => {
       onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }])}
     >
       {slides.map((item, index) => (
-        <View center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
+        <KaraView center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
           <Image
-            source={item.img}
+            source={require("../../assets/images/robot-dev.png")}
             resizeMode="contain"
             style={{
               width: SIZES.screenWidth,
-              height: '80%'
+              height: '80%',
+              postion: "absolute",
+              top: -50
             }}
           />
           {renderTexts(index)}
-        </View>
+        </KaraView>
       ))}
     </ScrollView>
   );
@@ -61,11 +61,11 @@ const renderTexts = slideIndex => {
   const slide = slides[slideIndex];
 
   return (
-    <View flex={false} center bottom margin={[10, 40, 5, 40]}>
-      <MnassaText animated center large semibold localeKey={`welcomeText${slideIndex + 1}`}>
+    <KaraView flex={false} center bottom margin={[10, 40, 5, 40]}>
+      <KaraText animated center large semibold localeKey={`welcomeText${slideIndex + 1}`}>
         {slide && slide.title}
-      </MnassaText>
-      <MnassaText
+      </KaraText>
+      <KaraText
         lightbold
         animated
         center
@@ -74,15 +74,15 @@ const renderTexts = slideIndex => {
         localeKey={`welcomeDescription${slideIndex + 1}`}
       >
         {slide && slide.description}
-      </MnassaText>
-    </View>
+      </KaraText>
+    </KaraView>
   );
 };
 
 const renderDots = scrollX => {
   const dotPosition = Animated.divide(scrollX, SIZES.screenWidth);
   return (
-    <View row center middle margin={[SIZES.medium, 0]}>
+    <KaraView row center middle margin={[SIZES.medium, 0]}>
       {slides.map((item, index) => {
         const opacity = dotPosition.interpolate({
           inputRange: [index - 1, index, index + 1],
@@ -92,7 +92,7 @@ const renderDots = scrollX => {
 
         // const color = opacity.__getValue() === 1 ? COLORS.primary : '#C8D5D8';
         return (
-          <View
+          <KaraView
             primary
             animated
             flex={false}
@@ -103,7 +103,7 @@ const renderDots = scrollX => {
           />
         );
       })}
-    </View>
+    </KaraView>
   );
 };
 
@@ -119,19 +119,58 @@ const Onboarding = ({ navigation, screenProps }) => {
   }, [slideIndex]);
  
   return  (
-    <View safe>
-      <View center middle>
+    <KaraView safe>
+   
+        {/* <Transition shared="topSvg">
+          <View style={styles.svgBackground}>
+            <Svg width={SIZES.screenWidthh} height={SIZES.screenHeight * 0.2} viewBox="0 0 375 340">
+              <Defs>
+                <LinearGradient x1="90.743%" y1="87.641%" x2="10.14%" y2="3.465%" id="prefix__a">
+                  <Stop stopColor="#53B4FF" offset="0%" />
+                  <Stop stopColor="#3186FF" offset="100%" />
+                </LinearGradient>
+              </Defs>
+              <Path
+              d="M.11-2H376c-.005 204.081-.005 306.134 0 306.158-95.114 82-135.593-8.28-188-16.789C98.06 266.778 51.482 346.402.11 262.41-.037 251.212-.037 163.075.11-2z"
+              fill="url(#prefix__a)"
+              fillRule="evenodd"
+              />
+            </Svg>
+          </View>
+        </Transition> */}
+   <KaraView><Svg
+      width={SIZES.screenWidth}
+      height={392}
+      viewBox="0 0 414 392"
+      fill="none"
+    
+    >
+      <Path d="M0 0h414v297c-44.5 156.5-273 91.5-414 0V0z" fill="#258EF6" />
+    </Svg></KaraView>
+      <KaraView center middle>
         {renderImages(scrollX)}
-      </View>
+      </KaraView>
       {/* <SwitchButton dispatch={dispatch} screenProps={screenProps} navigation={navigation} /> */}
-      <View flex={false} center bottom margin={[20, 40]}>
+      <KaraView flex={false} center bottom margin={[20, 40]}>
         {renderDots(scrollX)}
-      </View>
-    </View>
+      </KaraView>
+    </KaraView>
   );
 }
 Onboarding.navigationOptions = {
   header: null
 };
+
+const styles = StyleSheet.create({
+  dot: {
+    width: 9,
+    height: 9
+  },
+  // svgBackground: {
+  //   position: 'absolute',
+  //   top: -18,
+  // },
+});
+
 
 export default Onboarding;
