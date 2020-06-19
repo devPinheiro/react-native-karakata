@@ -7,7 +7,9 @@ const onBoardingScreans = createStackNavigator({
   OnboardingScreens
 }, {
   defaultNavigationOptions: {
-    headerStyle: {},
+    headerStyle: {
+      
+    },
     headerBackImage: null,
     headerBackTitle: null,
     headerLeftContainerStyle: {},
