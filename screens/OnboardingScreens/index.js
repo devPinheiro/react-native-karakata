@@ -64,7 +64,7 @@ const renderTexts = slideIndex => {
   const slide = slides[slideIndex];
 
   return (
-    <KaraView flex={false} center bottom margin={[10, 40, 5, 40]}>
+    <KaraView flex={false} center bottom margin={[10, 40, 5, 40]}style={styles.renderText}>
       <KaraText animated center color="white" large semibold localeKey={`welcomeText${slideIndex + 1}`}>
         {slide && slide.title}
       </KaraText>
@@ -126,9 +126,10 @@ const Onboarding = ({ navigation, screenProps }) => {
     <KaraView safe>
    
 
-   <KaraView>
+   <KaraView style={styles.svgBackground}>
+
      
-    <Svg
+    {/* <Svg
       width={SIZES.screenWidth}
       height={392}
       viewBox="0 0 414 392"
@@ -136,11 +137,25 @@ const Onboarding = ({ navigation, screenProps }) => {
     
     >
       <Path d="M0 0h414v297c-44.5 156.5-273 91.5-414 0V0z" fill="#258EF6" />      
-    </Svg>
+    </Svg> */}
         
       
     </KaraView>
-      <KaraView>{renderTexts(slideIndex)}</KaraView>
+      <KaraView>
+       
+        <View>
+ <Image  source={{ uri: "../../assets/images/mini-logo.png"}}
+            resizeMode="contain"
+            style={{
+              // width: SIZES.screenWidth,
+              // height: '80%',
+              position: "absolute",
+              top: 0
+            }}/>
+{renderTexts(slideIndex)}</View>
+       {/* <View style={styles.curvePanel}></View> */}
+      </KaraView>
+      
       <KaraView center middle>
         {renderImages(scrollX)}
       </KaraView>
@@ -159,12 +174,30 @@ Onboarding.navigationOptions = {
 const styles = StyleSheet.create({
   dot: {
     width: 9,
-    height: 9
+    height: 9,
+    backgroundColor: "#1687F8"
+  }, 
+  svgBackground: {
+    position: 'absolute',
+    top: 0,
+    backgroundColor: "#1687F8",
+    height: SIZES.screenHeight * 0.3,
+    width: SIZES.screenWidth,
   },
-  // svgBackground: {
-  //   position: 'absolute',
-  //   top: -18,
-  // },
+  curvePanel: {
+    position: "absolute",
+bottom: -14,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 60,
+borderBottomEndRadius: 1000,
+    backgroundColor: "#1687F8",
+    height: SIZES.screenHeight * 0.1,
+    width: SIZES.screenWidth,
+  },
+  renderText: {
+    position: 'relative',
+    top: 70,
+}
 });
 
 
