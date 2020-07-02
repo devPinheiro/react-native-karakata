@@ -28,15 +28,35 @@ import Entry from './Entry';
 
 
 const KaraKata = props => {
-  // const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
 
-  // if (!isLoadingComplete && !props.skipLoadingScreen) {
-  //   return ( <AppLoading onFinish = {
-  //       () => setIsLoadingComplete(true)
-  //     }
-  //     />
-  //   );
-  // }
+  const _loadResourcesAsync = () => {
+    return Font.loadAsync({
+      'avenir-bold': require('./assets/fonts/avenir-bold.ttf'),
+      'avenir-heavy': require('./assets/fonts/avenir-heavy.ttf'),
+      'avenir-semibold': require('./assets/fonts/avenir-semibold.ttf'),
+      'avenir-medium': require('./assets/fonts/avenir-medium.ttf'),
+      'avenir-regular': require('./assets/fonts/avenir-regular.ttf'),
+      'avenir-light': require('./assets/fonts/avenir-light.ttf'),
+      'lucida-grande': require('./assets/fonts/LucidaGrande.ttf'),
+      'lucida-grande-bold': require('./assets/fonts/LucidaGrandeBold.ttf'),
+      // Roboto: require('native-base/Fonts/Roboto.ttf'),
+      // Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+    });
+  };
+
+  const _handleLoadingError = error => {
+    console.warn(error);
+  };
+
+  if (!isLoadingComplete && !props.skipLoadingScreen) {
+    return ( <AppLoading
+        startAsync={_loadResourcesAsync}
+        onError={_handleLoadingError}
+        onFinish={() => setIsLoadingComplete(true)}
+      />
+    );
+  }
 
   return (
     // <Provider store={myStore}>

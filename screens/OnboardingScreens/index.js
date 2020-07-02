@@ -1,30 +1,28 @@
-import {  Animated, Image, StyleSheet, ScrollView, View } from 'react-native';
+import {  Animated, Image, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import Svg, {Path} from "react-native-svg";
-import { SIZES } from "../../utils/theme"
+import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
+import { SIZES, COLORS } from "../../utils/theme"
+import KaraText from "../components/KaraText"
+import KaraView from "../components/KaraView"
+import { LinearGradient as Gradient } from 'expo-linear-gradient';
+import { Transition } from 'react-navigation-fluid-transitions';
 
 
 const slides = [
   {
-    title: 'Welcome to Mnassa',
+    title: 'Welcome to Karakata',
     description: 'Build and expand your network with people you trust',
-    img: <Svg width={48} height={1} viewBox="0 0 48 1">
-      <Path d="M0 0h48v1H0z" fill="#063855" fillRule="evenodd" />
-    </Svg>
+    img: "https://res.cloudinary.com/appnet/image/upload/v1592601647/karakata/piggy.png"
   },
   {
-    title: 'Connect to your community',
+    title: 'Move your parcel anywhere',
     description: 'Find and attend activities within your interest',
-    img: <Svg width={48} height={1} viewBox="0 0 48 1">
-      <Path d="M0 0h48v1H0z" fill="#063855" fillRule="evenodd" />
-    </Svg>
+    img: "https://res.cloudinary.com/appnet/image/upload/v1592601646/karakata/logistic.png"
   },
   {
     title: 'Earn Points',
     description: 'Gain points for supporting other members',
-    img: <Svg width={48} height={1} viewBox="0 0 48 1">
-      <Path d="M0 0h48v1H0z" fill="#063855" fillRule="evenodd" />
-    </Svg>
+    img: "https://res.cloudinary.com/appnet/image/upload/v1592601646/karakata/shopping.png"
   }
 ];
 
@@ -41,17 +39,22 @@ const renderImages = scrollX => {
       onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }])}
     >
       {slides.map((item, index) => (
-        <View center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
+        <>  
+        <KaraView center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
+
           <Image
-            source={item.img}
+            source={{ uri: item.img}}
             resizeMode="contain"
             style={{
               width: SIZES.screenWidth,
-              height: '80%'
+              height: '35%',
+              position: "relative",
+              top: -40
             }}
           />
-          {renderTexts(index)}
-        </View>
+          
+        </KaraView>
+       </>
       ))}
     </ScrollView>
   );
@@ -61,28 +64,29 @@ const renderTexts = slideIndex => {
   const slide = slides[slideIndex];
 
   return (
-    <View flex={false} center bottom margin={[10, 40, 5, 40]}>
-      <MnassaText animated center large semibold localeKey={`welcomeText${slideIndex + 1}`}>
+    <KaraView flex={false} center bottom margin={[10, 40, 5, 40]}style={styles.renderText}>
+      <KaraText animated center color="white" large semibold localeKey={`welcomeText${slideIndex + 1}`}>
         {slide && slide.title}
-      </MnassaText>
-      <MnassaText
+      </KaraText>
+      <KaraText
         lightbold
-        animated
+        animated 
+        color="white"
         center
-        midGrey
+        
         margin={[0]}
         localeKey={`welcomeDescription${slideIndex + 1}`}
       >
         {slide && slide.description}
-      </MnassaText>
-    </View>
+      </KaraText>
+    </KaraView>
   );
 };
 
 const renderDots = scrollX => {
   const dotPosition = Animated.divide(scrollX, SIZES.screenWidth);
   return (
-    <View row center middle margin={[SIZES.medium, 0]}>
+    <KaraView row center middle margin={[SIZES.medium, 0]}>
       {slides.map((item, index) => {
         const opacity = dotPosition.interpolate({
           inputRange: [index - 1, index, index + 1],
@@ -92,7 +96,7 @@ const renderDots = scrollX => {
 
         // const color = opacity.__getValue() === 1 ? COLORS.primary : '#C8D5D8';
         return (
-          <View
+          <KaraView
             primary
             animated
             flex={false}
@@ -103,15 +107,25 @@ const renderDots = scrollX => {
           />
         );
       })}
-    </View>
+    </KaraView>
   );
 };
+
+
 
 const Onboarding = ({ navigation, screenProps }) => {
  
   const [slideIndex, setSlideIndex] = useState(0);
   const scrollX = new Animated.Value(0);
- 
+  const renderActions = scrollX => {
+    return (
+      <>
+        <TouchableOpacity onPress={() => setSlideIndex(2)}>
+          <KaraText right margin={[10, 30]} color={COLORS.lightGrey}>Skip</KaraText>
+        </TouchableOpacity>
+      </>
+    )
+  }
   useEffect(() => {
     scrollX.addListener(({ value }) => {
       setSlideIndex(Math.floor(value / SIZES.screenWidth));
@@ -119,19 +133,65 @@ const Onboarding = ({ navigation, screenProps }) => {
   }, [slideIndex]);
  
   return  (
-    <View safe>
-      <View center middle>
+    <KaraView safe>
+   
+
+   <KaraView style={styles.svgBackground}>
+
+    
+      <KaraView>
+       
+        <View>
+ <Image  source={require("../../assets/images/mini-logo.png")}
+            resizeMode="contain"
+            style={{
+              width: SIZES.screenWidth, 
+              height: 50,
+              position: "absolute",
+              top: 30,
+
+            }}/>
+{renderTexts(slideIndex)}</View>
+       {/* <View style={styles.curvePanel}></View> */}
+      </KaraView></KaraView>
+      
+      <KaraView center middle>
         {renderImages(scrollX)}
-      </View>
+      </KaraView>
       {/* <SwitchButton dispatch={dispatch} screenProps={screenProps} navigation={navigation} /> */}
-      <View flex={false} center bottom margin={[20, 40]}>
+      <KaraView flex={false} center bottom margin={[20, 40]}>
         {renderDots(scrollX)}
-      </View>
-    </View>
+       
+      </KaraView>
+      {renderActions(scrollX)}
+    </KaraView>
   );
 }
+
 Onboarding.navigationOptions = {
   header: null
 };
+
+const styles = StyleSheet.create({
+  dot: {
+    width: 9,
+    height: 9,
+    backgroundColor: "#1687F8"
+  }, 
+  svgBackground: {
+    position: 'absolute',
+    top: 0,
+    backgroundColor: "#1687F8",
+    height: SIZES.screenHeight * 0.45,
+    width: SIZES.screenWidth,
+    borderBottomLeftRadius: 120,
+    borderBottomRightRadius: 5
+  },
+  renderText: {
+    position: 'relative',
+    top: 160,
+}
+});
+
 
 export default Onboarding;
