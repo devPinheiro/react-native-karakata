@@ -239,4 +239,4 @@ export const styles = StyleSheet.create({
     background: {backgroundColor: COLORS.background}
 });
 
-export default KaraView;
+export default React.memo(KaraView);

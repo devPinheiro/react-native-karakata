@@ -230,14 +230,6 @@ const KaraText = (props) => {
 			</Animated.Text>
 		);
 	}
-	if (localeKey) {
-		return (
-			<Text style={textStyles} {...rest} allowFontScaling={false}>
-				{" "}
-				{i18n.t(localeKey)}{" "}
-			</Text>
-		);
-	}
 	return (
 		<Text style={textStyles} {...rest} allowFontScaling={false}>
 			{" "}
