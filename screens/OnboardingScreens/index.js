@@ -1,7 +1,7 @@
-import {  Animated, Image, StyleSheet, ScrollView, View } from 'react-native';
+import {  Animated, Image, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
-import { SIZES } from "../../utils/theme"
+import { SIZES, COLORS } from "../../utils/theme"
 import KaraText from "../components/KaraText"
 import KaraView from "../components/KaraView"
 import { LinearGradient as Gradient } from 'expo-linear-gradient';
@@ -47,9 +47,9 @@ const renderImages = scrollX => {
             resizeMode="contain"
             style={{
               width: SIZES.screenWidth,
-              height: '80%',
-              // position: "absolute",
-              // top: -10
+              height: '35%',
+              position: "relative",
+              top: -40
             }}
           />
           
@@ -111,11 +111,21 @@ const renderDots = scrollX => {
   );
 };
 
+
+
 const Onboarding = ({ navigation, screenProps }) => {
  
   const [slideIndex, setSlideIndex] = useState(0);
   const scrollX = new Animated.Value(0);
- 
+  const renderActions = scrollX => {
+    return (
+      <>
+        <TouchableOpacity onPress={() => setSlideIndex(2)}>
+          <KaraText right margin={[10, 30]} color={COLORS.lightGrey}>Skip</KaraText>
+        </TouchableOpacity>
+      </>
+    )
+  }
   useEffect(() => {
     scrollX.addListener(({ value }) => {
       setSlideIndex(Math.floor(value / SIZES.screenWidth));
@@ -128,33 +138,22 @@ const Onboarding = ({ navigation, screenProps }) => {
 
    <KaraView style={styles.svgBackground}>
 
-     
-    {/* <Svg
-      width={SIZES.screenWidth}
-      height={392}
-      viewBox="0 0 414 392"
-      fill="none"
     
-    >
-      <Path d="M0 0h414v297c-44.5 156.5-273 91.5-414 0V0z" fill="#258EF6" />      
-    </Svg> */}
-        
-      
-    </KaraView>
       <KaraView>
        
         <View>
- <Image  source={{ uri: "../../assets/images/mini-logo.png"}}
+ <Image  source={require("../../assets/images/mini-logo.png")}
             resizeMode="contain"
             style={{
-              // width: SIZES.screenWidth,
-              // height: '80%',
+              width: SIZES.screenWidth, 
+              height: 50,
               position: "absolute",
-              top: 0
+              top: 30,
+
             }}/>
 {renderTexts(slideIndex)}</View>
        {/* <View style={styles.curvePanel}></View> */}
-      </KaraView>
+      </KaraView></KaraView>
       
       <KaraView center middle>
         {renderImages(scrollX)}
@@ -162,7 +161,9 @@ const Onboarding = ({ navigation, screenProps }) => {
       {/* <SwitchButton dispatch={dispatch} screenProps={screenProps} navigation={navigation} /> */}
       <KaraView flex={false} center bottom margin={[20, 40]}>
         {renderDots(scrollX)}
+       
       </KaraView>
+      {renderActions(scrollX)}
     </KaraView>
   );
 }
@@ -181,22 +182,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     backgroundColor: "#1687F8",
-    height: SIZES.screenHeight * 0.3,
+    height: SIZES.screenHeight * 0.45,
     width: SIZES.screenWidth,
-  },
-  curvePanel: {
-    position: "absolute",
-bottom: -14,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 60,
-borderBottomEndRadius: 1000,
-    backgroundColor: "#1687F8",
-    height: SIZES.screenHeight * 0.1,
-    width: SIZES.screenWidth,
+    borderBottomLeftRadius: 120,
+    borderBottomRightRadius: 5
   },
   renderText: {
     position: 'relative',
-    top: 70,
+    top: 160,
 }
 });
 
