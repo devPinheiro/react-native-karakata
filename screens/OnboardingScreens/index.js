@@ -6,6 +6,7 @@ import KaraText from "../components/KaraText"
 import KaraView from "../components/KaraView"
 import { LinearGradient as Gradient } from 'expo-linear-gradient';
 import { Transition } from 'react-navigation-fluid-transitions';
+import KaraButton from '../components/KaraButton';
 
 
 const slides = [
@@ -116,13 +117,21 @@ const renderDots = scrollX => {
 const Onboarding = ({ navigation, screenProps }) => {
  
   const [slideIndex, setSlideIndex] = useState(0);
+  const [skip, setSkip] = useState(true);
   const scrollX = new Animated.Value(0);
-  const renderActions = scrollX => {
+  const renderActions = () => {
     return (
       <>
-        <TouchableOpacity onPress={() => setSlideIndex(2)}>
+        {skip ?
+        <TouchableOpacity onPress={() => setSkip(!skip)}>
           <KaraText right margin={[10, 30]} color={COLORS.lightGrey}>Skip</KaraText>
-        </TouchableOpacity>
+        </TouchableOpacity> :
+        <View style={styles.spaceBetween}>
+         <TouchableOpacity>
+        <View style={styles.buttonFill}><KaraText white>Sign Up</KaraText></View></TouchableOpacity>
+ 
+         <TouchableOpacity><View style={styles.buttonOutline}><KaraText primary>Login</KaraText></View></TouchableOpacity>
+        </View>}
       </>
     )
   }
@@ -133,7 +142,7 @@ const Onboarding = ({ navigation, screenProps }) => {
   }, [slideIndex]);
  
   return  (
-    <KaraView safe>
+    <KaraView>
    
 
    <KaraView style={styles.svgBackground}>
@@ -142,23 +151,23 @@ const Onboarding = ({ navigation, screenProps }) => {
       <KaraView>
        
         <View>
- <Image  source={require("../../assets/images/mini-logo.png")}
-            resizeMode="contain"
-            style={{
-              width: SIZES.screenWidth, 
-              height: 50,
-              position: "absolute",
-              top: 30,
+          <Image  source={require("../../assets/images/mini-logo.png")}
+                      resizeMode="contain"
+                      style={{
+                        width: SIZES.screenWidth, 
+                        height: 50,
+                        position: "absolute",
+                        top: 30,
 
-            }}/>
-{renderTexts(slideIndex)}</View>
+                      }}/>
+         {renderTexts(slideIndex)}
+      </View>
        {/* <View style={styles.curvePanel}></View> */}
       </KaraView></KaraView>
       
       <KaraView center middle>
         {renderImages(scrollX)}
       </KaraView>
-      {/* <SwitchButton dispatch={dispatch} screenProps={screenProps} navigation={navigation} /> */}
       <KaraView flex={false} center bottom margin={[20, 40]}>
         {renderDots(scrollX)}
        
@@ -190,7 +199,34 @@ const styles = StyleSheet.create({
   renderText: {
     position: 'relative',
     top: 160,
-}
+},
+ spaceBetween: {
+   flexDirection: "row",
+   justifyContent: "center",
+    marginBottom: 10
+ },
+  buttonFill: {
+    marginRight: 10,
+    paddingTop: 5,
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingBottom: 5,
+    color: COLORS.white,
+    borderRadius: 5,
+    backgroundColor: COLORS.primary
+  },
+  buttonOutline: {
+    marginLeft: 10,
+    paddingTop: 5,
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingBottom: 5,
+    color: COLORS.white,
+    borderRadius: 5,
+    backgroundColor: COLORS.white,
+    borderColor: COLORS.primary,
+    borderWidth: 0.5
+  }
 });
 
 
