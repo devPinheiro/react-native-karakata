@@ -12,33 +12,25 @@ import KaraButton from '../components/KaraButton';
 const slides = [
   {
     title: 'Welcome to Karakata',
-    description: 'Build and expand your network with people you trust',
+    description: 'All-in-One Delivery App for faster, reliable and hassle-free deliveries',
     img: "https://res.cloudinary.com/appnet/image/upload/v1592601647/karakata/piggy.png"
   },
-  {
-    title: 'Move your parcel anywhere',
-    description: 'Find and attend activities within your interest',
-    img: "https://res.cloudinary.com/appnet/image/upload/v1592601646/karakata/logistic.png"
-  },
-  {
-    title: 'Earn Points',
-    description: 'Gain points for supporting other members',
-    img: "https://res.cloudinary.com/appnet/image/upload/v1592601646/karakata/shopping.png"
-  }
+
 ];
 
 const renderImages = scrollX => {
   return (
-    <ScrollView
-      horizontal
-      pagingEnabled
-      scrollEnabled
-      decelerationRate={0}
-      scrollEventThrottle={0}
-      snapToAlignment="center"
-      showsHorizontalScrollIndicator={false}
-      onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }])}
-    >
+    // <ScrollView
+    //   horizontal
+    //   pagingEnabled
+    //   scrollEnabled
+    //   decelerationRate={0}
+    //   scrollEventThrottle={0}
+    //   snapToAlignment="center"
+    //   showsHorizontalScrollIndicator={false}
+    //   onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }])}
+    // >
+    <View>
       {slides.map((item, index) => (
         <>  
         <KaraView center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
@@ -57,7 +49,8 @@ const renderImages = scrollX => {
         </KaraView>
        </>
       ))}
-    </ScrollView>
+      </View>
+    // </ScrollView> 
   );
 };
 
@@ -67,7 +60,7 @@ const renderTexts = slideIndex => {
   return (
     <KaraView flex={false} center bottom margin={[10, 40, 5, 40]}style={styles.renderText}>
       <KaraText animated center color="white" large semibold localeKey={`welcomeText${slideIndex + 1}`}>
-        {slide && slide.title}
+        {/* {slide && slide.title} */}
       </KaraText>
       <KaraText
         lightbold
@@ -122,15 +115,12 @@ const Onboarding = ({ navigation, screenProps }) => {
   const renderActions = () => {
     return (
       <>
-        {skip ?
-        <TouchableOpacity onPress={() => setSkip(!skip)}>
-          <KaraText right margin={[10, 30]} color={COLORS.lightGrey}>Skip</KaraText>
-        </TouchableOpacity> :
+        {
         <View style={styles.spaceBetween}>
          <TouchableOpacity>
-        <View style={styles.buttonFill}><KaraText white>Sign Up</KaraText></View></TouchableOpacity>
- 
-         <TouchableOpacity><View style={styles.buttonOutline}><KaraText primary>Login</KaraText></View></TouchableOpacity>
+        <View><KaraText white>Sign in |</KaraText></View></TouchableOpacity>
+         
+         <TouchableOpacity><View><KaraText white>Register</KaraText></View></TouchableOpacity>
         </View>}
       </>
     )
@@ -142,7 +132,7 @@ const Onboarding = ({ navigation, screenProps }) => {
   }, [slideIndex]);
  
   return  (    
-      <KaraView>
+      <KaraView backgroundColor={COLORS.black}>
        
         <View>
           <Image  source={require("../../assets/images/mini-logo.png")}
@@ -160,7 +150,7 @@ const Onboarding = ({ navigation, screenProps }) => {
     
       
       <KaraView center middle>
-        {/* {renderImages(scrollX)} */}
+        {renderImages(scrollX)}
       </KaraView>
       <KaraView flex={false} center bottom margin={[20, 40]}>
         {/* {renderDots(scrollX)} */}
@@ -196,8 +186,9 @@ const styles = StyleSheet.create({
 },
  spaceBetween: {
    flexDirection: "row",
-   justifyContent: "center",
-    marginBottom: 10
+   justifyContent: "flex-end",
+    marginBottom: 10,
+    marginRight: 30
  },
   buttonFill: {
     marginRight: 10,
