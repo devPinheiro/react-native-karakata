@@ -141,13 +141,7 @@ const Onboarding = ({ navigation, screenProps }) => {
     });
   }, [slideIndex]);
  
-  return  (
-    <KaraView>
-   
-
-   <KaraView style={styles.svgBackground}>
-
-    
+  return  (    
       <KaraView>
        
         <View>
@@ -163,13 +157,13 @@ const Onboarding = ({ navigation, screenProps }) => {
          {renderTexts(slideIndex)}
       </View>
        {/* <View style={styles.curvePanel}></View> */}
-      </KaraView></KaraView>
+    
       
       <KaraView center middle>
-        {renderImages(scrollX)}
+        {/* {renderImages(scrollX)} */}
       </KaraView>
       <KaraView flex={false} center bottom margin={[20, 40]}>
-        {renderDots(scrollX)}
+        {/* {renderDots(scrollX)} */}
        
       </KaraView>
       {renderActions(scrollX)}
