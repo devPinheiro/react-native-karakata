@@ -1,24 +1,32 @@
-import {  Animated, Image, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  ScrollView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
-import { SIZES, COLORS } from "../../utils/theme"
-import KaraText from "../components/KaraText"
-import KaraView from "../components/KaraView"
+import { SIZES, COLORS } from '../../utils/theme';
+import KaraText from '../components/KaraText';
+import KaraView from '../components/KaraView';
 import { LinearGradient as Gradient } from 'expo-linear-gradient';
 import { Transition } from 'react-navigation-fluid-transitions';
 import KaraButton from '../components/KaraButton';
-
+import Rider from '../../components/SvgComponents/rider'
 
 const slides = [
   {
     title: 'Welcome to Karakata',
-    description: 'All-in-One Delivery App for faster, reliable and hassle-free deliveries',
-    img: "https://res.cloudinary.com/appnet/image/upload/v1592601647/karakata/piggy.png"
+    description:
+      'All-in-One Delivery App for faster, reliable and hassle-free deliveries',
+    img:
+      'https://res.cloudinary.com/appnet/image/upload/v1592601647/karakata/piggy.png',
   },
-
 ];
 
-const renderImages = scrollX => {
+const renderImages = (scrollX) => {
   return (
     // <ScrollView
     //   horizontal
@@ -32,52 +40,63 @@ const renderImages = scrollX => {
     // >
     <View>
       {slides.map((item, index) => (
-        <>  
-        <KaraView center bottom key={`img-${index}`} style={{ width: SIZES.screenWidth }}>
-
-          <Image
-            source={{ uri: item.img}}
-            resizeMode="contain"
-            style={{
-              width: SIZES.screenWidth,
-              height: '35%',
-              position: "relative",
-              top: -40
-            }}
-          />
-          
-        </KaraView>
-       </>
+        <>
+          <KaraView
+            center
+            bottom
+            key={`img-${index}`}
+            style={{ width: SIZES.screenWidth }}>
+            <Image
+              source={{ uri: item.img }}
+              resizeMode='contain'
+              style={{
+                width: SIZES.screenWidth,
+                height: '35%',
+                position: 'relative',
+                top: -40,
+              }}
+            />
+          </KaraView>
+        </>
       ))}
-      </View>
-    // </ScrollView> 
+    </View>
+    // </ScrollView>
   );
 };
 
-const renderTexts = slideIndex => {
+const renderTexts = (slideIndex) => {
   const slide = slides[slideIndex];
 
   return (
-    <KaraView flex={false} center bottom margin={[10, 40, 5, 40]}style={styles.renderText}>
-      <KaraText animated center color="white" large semibold localeKey={`welcomeText${slideIndex + 1}`}>
+    <KaraView
+      flex={false}
+      center
+      bottom
+      margin={[10, 40, 5, 40]}
+      style={styles.renderText}>
+      <KaraText
+        animated
+        center
+        color='white'
+        large
+        semibold
+        localeKey={`welcomeText${slideIndex + 1}`}>
         {/* {slide && slide.title} */}
       </KaraText>
       <KaraText
         lightbold
-        animated 
-        color="white"
+        animated
+        color='white'
         center
-        
         margin={[0]}
-        localeKey={`welcomeDescription${slideIndex + 1}`}
-      >
+        localeKey={`welcomeDescription${slideIndex + 1}`}>
         {slide && slide.description}
       </KaraText>
     </KaraView>
   );
 };
 
-const renderDots = scrollX => {
+const renderDots = (scrollX) => {
   const dotPosition = Animated.divide(scrollX, SIZES.screenWidth);
   return (
     <KaraView row center middle margin={[SIZES.medium, 0]}>
@@ -85,7 +104,7 @@ const renderDots = scrollX => {
         const opacity = dotPosition.interpolate({
           inputRange: [index - 1, index, index + 1],
           outputRange: [0.3, 1, 0.3],
-          extrapolate: 'clamp'
+          extrapolate: 'clamp',
         });
 
         // const color = opacity.__getValue() === 1 ? COLORS.primary : '#C8D5D8';
@@ -105,10 +124,7 @@ const renderDots = scrollX => {
   );
 };
 
-
-
 const Onboarding = ({ navigation, screenProps }) => {
- 
   const [slideIndex, setSlideIndex] = useState(0);
   const [skip, setSkip] = useState(true);
   const scrollX = new Animated.Value(0);
@@ -116,80 +132,87 @@ const Onboarding = ({ navigation, screenProps }) => {
     return (
       <>
         {
-        <View style={styles.spaceBetween}>
-         <TouchableOpacity>
-        <View><KaraText white>Sign in |</KaraText></View></TouchableOpacity>
-         
-         <TouchableOpacity><View><KaraText white>Register</KaraText></View></TouchableOpacity>
-        </View>}
+          <View style={styles.spaceBetween}>
+            <TouchableOpacity>
+              <View>
+                <KaraText white>Sign in |</KaraText>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <View>
+                <KaraText white>Register</KaraText>
+              </View>
+            </TouchableOpacity>
+          </View>
+        }
       </>
-    )
-  }
+    );
+  };
   useEffect(() => {
     scrollX.addListener(({ value }) => {
       setSlideIndex(Math.floor(value / SIZES.screenWidth));
     });
   }, [slideIndex]);
- 
-  return  (    
-      <KaraView backgroundColor={COLORS.black}>
-       
-        <View>
-          <Image  source={require("../../assets/images/mini-logo.png")}
-                      resizeMode="contain"
-                      style={{
-                        width: SIZES.screenWidth, 
-                        height: 50,
-                        position: "absolute",
-                        top: 30,
 
-                      }}/>
-         {renderTexts(slideIndex)}
+  return (
+    <KaraView backgroundColor={COLORS.black}>
+      <View>
+        <Image
+          source={require('../../assets/images/mini-logo.png')}
+          resizeMode='contain'
+          style={{
+            width: SIZES.screenWidth,
+            height: 50,
+            position: 'absolute',
+            top: 30,
+          }}
+        />
+        {renderTexts(slideIndex)}
       </View>
-       {/* <View style={styles.curvePanel}></View> */}
-    
-      
+      {/* <View style={styles.curvePanel}></View> */}
+
       <KaraView center middle>
-        {renderImages(scrollX)}
+        {/* {renderImages(scrollX)} */}
+        <Rider />
       </KaraView>
       <KaraView flex={false} center bottom margin={[20, 40]}>
         {/* {renderDots(scrollX)} */}
-       
       </KaraView>
       {renderActions(scrollX)}
     </KaraView>
   );
-}
+};
 
 Onboarding.navigationOptions = {
-  header: null
+  header: null,
 };
 
 const styles = StyleSheet.create({
   dot: {
     width: 9,
     height: 9,
-    backgroundColor: "#1687F8"
-  }, 
+    backgroundColor: '#1687F8',
+  },
   svgBackground: {
     position: 'absolute',
     top: 0,
-    backgroundColor: "#1687F8",
+    backgroundColor: '#1687F8',
     height: SIZES.screenHeight * 0.45,
     width: SIZES.screenWidth,
     borderBottomLeftRadius: 120,
-    borderBottomRightRadius: 5
+    borderBottomRightRadius: 5,
   },
   renderText: {
     position: 'relative',
     top: 160,
-},
- spaceBetween: {
-   flexDirection: "row",
-   justifyContent: "flex-end",
+  },
+  spaceBetween: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     marginBottom: 10,
-    marginRight: 30
- },
+    marginRight: 30,
+  },
   buttonFill: {
     marginRight: 10,
     paddingTop: 5,
@@ -198,7 +221,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     color: COLORS.white,
     borderRadius: 5,
-    backgroundColor: COLORS.primary
+    backgroundColor: COLORS.primary,
   },
   buttonOutline: {
     marginLeft: 10,
@@ -210,9 +233,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: COLORS.white,
     borderColor: COLORS.primary,
-    borderWidth: 0.5
-  }
+    borderWidth: 0.5,
+  },
 });
-
 
 export default Onboarding;
