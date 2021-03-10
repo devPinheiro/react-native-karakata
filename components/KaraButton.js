@@ -9,11 +9,8 @@ import {
 } from 'react-native';
 
 //constants
-import {
-  COLORS,
-  SIZES,
-  FONTS
-} from "../../utils/theme";
+import {COLORS, SIZES, FONTS} from "../constants/theme";
+
 
 const KaraButton = props => {
   const handleMargins = () => {

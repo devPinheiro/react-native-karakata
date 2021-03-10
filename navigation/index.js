@@ -1,7 +1,7 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import onboardingScreens from './Onboarding';
-import homeScreans from './Home';
+import homeScreens from './Home';
 
-const Navigation = createSwitchNavigator({onboardingScreens, homeScreans}, {initialRouteName: "onboardingScreens", lazy: true });
+const Navigation = createSwitchNavigator({onboardingScreens, homeScreens}, {initialRouteName: "onboardingScreens", lazy: true });
 
 export default createAppContainer(Navigation)

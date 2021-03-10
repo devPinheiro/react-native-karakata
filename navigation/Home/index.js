@@ -5,7 +5,7 @@ import {
 
 import BottomNavigator from '../BottomTabNavigator';
 
-const homeScreans = createStackNavigator({
+const homeScreens = createStackNavigator({
   BottomNavigator
 }, {
   defaultNavigationOptions: {
@@ -17,4 +17,4 @@ const homeScreans = createStackNavigator({
   }
 });
 
-export default homeScreans;
+export default homeScreens;

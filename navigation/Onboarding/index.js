@@ -3,14 +3,15 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import OnboardingScreens from '../../screens/OnboardingScreens';
 import LoginScreen from '../../screens/OnboardingScreens/Login';
+import RegisterScreen from '../../screens/OnboardingScreens/Register';
 
-const onBoardingScreans = createStackNavigator({
+const onBoardingScreens = createStackNavigator({
   OnboardingScreens,
-  LoginScreen
+  LoginScreen,
+  RegisterScreen
 }, {
   defaultNavigationOptions: {
     headerStyle: {
-      
     },
     headerBackImage: null,
     headerBackTitle: null,
@@ -19,4 +20,4 @@ const onBoardingScreans = createStackNavigator({
   }
 });
 
-export default onBoardingScreans;
+export default onBoardingScreens;

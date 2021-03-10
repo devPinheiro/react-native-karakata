@@ -9,12 +9,12 @@ import {
 import React, { useState, useEffect } from 'react';
 import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
 import { SIZES, COLORS } from '../../utils/theme';
-import KaraText from '../components/KaraText';
-import KaraView from '../components/KaraView';
+import KaraText from '../../components/KaraText';
+import KaraView from '../../components/KaraView';
 import { LinearGradient as Gradient } from 'expo-linear-gradient';
 import { Transition } from 'react-navigation-fluid-transitions';
-import KaraButton from '../components/KaraButton';
 import Rider from '../../components/SvgComponents/rider'
+import Logo from '../../components/SvgComponents/logo'
 
 const slides = [
   {
@@ -133,13 +133,13 @@ const Onboarding = ({ navigation, screenProps }) => {
       <>
         {
           <View style={styles.spaceBetween}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
               <View>
-                <KaraText white>Sign in |</KaraText>
+                <KaraText white>Sign in </KaraText>
               </View>
             </TouchableOpacity>
-
-            <TouchableOpacity>
+           <KaraText padding={[0,5]} color={COLORS.white}>|</KaraText>
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
               <View>
                 <KaraText white>Register</KaraText>
               </View>
@@ -158,22 +158,28 @@ const Onboarding = ({ navigation, screenProps }) => {
   return (
     <KaraView backgroundColor={COLORS.black}>
       <View>
-        <Image
-          source={require('../../assets/images/mini-logo.png')}
-          resizeMode='contain'
+        <View
+          
           style={{
             width: SIZES.screenWidth,
             height: 50,
             position: 'absolute',
             top: 30,
+            alignItems: 'center'
           }}
-        />
-        {renderTexts(slideIndex)}
+        >
+          <Logo />
+          </View>
+        
       </View>
-      {/* <View style={styles.curvePanel}></View> */}
-
+    
+  {/* {renderTexts(slideIndex)} */}
+  
       <KaraView center middle>
-        {/* {renderImages(scrollX)} */}
+       <KaraText color={COLORS.white} medium300
+        animated
+       size={18}
+        margin={[20,8]}>All-in-One Delivery App for faster, reliable and hassle-free deliveries</KaraText>
         <Rider />
       </KaraView>
       <KaraView flex={false} center bottom margin={[20, 40]}>
@@ -210,7 +216,7 @@ const styles = StyleSheet.create({
   spaceBetween: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginBottom: 10,
+    marginBottom: 30,
     marginRight: 30,
   },
   buttonFill: {
