@@ -1,6 +1,6 @@
 import React from "react";
 import {Animated, I18nManager, Text, StyleSheet} from "react-native";
-import {COLORS, SIZES, FONTS} from "../../utils/theme";
+import {COLORS, SIZES, FONTS} from "../constants/theme";
 
 const KaraText = (props) => {
 	
@@ -182,7 +182,7 @@ const KaraText = (props) => {
 		weight && {
 			fontWeight: weight,
 		},
-		regular && styles.regular,
+		styles.regular,
 		bold && styles.bold,
 		semibold && styles.semibold,
 		heavy && styles.heavy,

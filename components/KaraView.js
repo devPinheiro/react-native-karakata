@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Animated, SafeAreaView} from 'react-native';
 
-import {COLORS, SIZES, FONTS} from "../../utils/theme";
+import {COLORS, SIZES, FONTS} from "../constants/theme";
 
 const KaraView = props => {
     const handleMargins = () => {
