@@ -21,7 +21,7 @@ const Login = ({ navigation, screenProps }) => {
             <CustomInput label="Email" placeholder="Email Address" onChangeText={setFirstName} value={firstName} type="emailAddress" />
             <CustomInput label="Password" placeholder="Minimum of 8 Characters" onChangeText={setFirstName} value={firstName} type="emailAddress" />
 
-            <KaraButton ><KaraText color={COLORS.white} lightbold>Sign In</KaraText></KaraButton>
+            <KaraButton onPress={() => navigation.navigate('LinkScreen')} ><KaraText color={COLORS.white} lightbold>Sign In</KaraText></KaraButton>
         </View>
     )
 }
