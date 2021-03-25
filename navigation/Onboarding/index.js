@@ -5,12 +5,14 @@ import OnboardingScreens from '../../screens/OnboardingScreens';
 import LoginScreen from '../../screens/OnboardingScreens/Login';
 import RegisterScreen from '../../screens/OnboardingScreens/Register';
 import HomeScreen from '../../screens/Home/HomeScreen';
+import LinkScreen from '../../screens/Home/LinksScreen';
 
 const onBoardingScreens = createStackNavigator({
   OnboardingScreens,
   LoginScreen,
   RegisterScreen,
-  HomeScreen
+  HomeScreen,
+  LinkScreen
 }, {
   defaultNavigationOptions: {
     headerStyle: {
